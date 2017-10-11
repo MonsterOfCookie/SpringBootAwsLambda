@@ -1,0 +1,62 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.supercookie'
+version = '0.0.1'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	springFrameworkVersion = '4.3.11.RELEASE'
+	awsLambdaVersion = '1.1.0'
+	awsLambdaContainerVersion = '0.7'
+}
+
+
+dependencies {
+
+	compile("org.springframework:spring-webmvc:$springFrameworkVersion")
+	compile("com.amazonaws.serverless:aws-serverless-java-container-spring:$awsLambdaContainerVersion")
+	compile("com.amazonaws:aws-lambda-java-core:$awsLambdaVersion")
+	compile("org.slf4j:jcl-over-slf4j:1.7.25")
+
+    testCompile('org.springframework.boot:spring-boot-starter-web') {
+		exclude module: "spring-boot-starter-tomcat"
+	}
+
+	testCompile('org.springframework.boot:spring-boot-starter-jetty')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+jar {
+	enabled = true
+	into('lib') {
+		from configurations.runtime
+	}
+}
+
+springBoot {
+    // This is deprecated, but will still work, as we need to layout in a way
+    // that is flat for AWS. In Spring 5 this is different.
+	layout = "MODULE"
+}
+
+bootRun {
+	classpath = sourceSets.test.runtimeClasspath
+	main = "com.supercookie.demo.DemoApplication"
+}
