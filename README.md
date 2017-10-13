@@ -13,7 +13,7 @@ This project is to show how to use a bare Spring WebMVC project, in a Lambda - B
 available for local testing. I.e. starting up your server locally for debugging, testing and proving your code.
 Pretty handy for integration testing too!
 
-##Usage
+## Usage
 
 `./gradlew build`
 
@@ -27,7 +27,7 @@ Will start a local jetty instance and you can go to
 
 And see a nice "hello world" message.
 
-##Deploy on Lambda
+## Deploy on Lambda
 
 I am going to assume you know a bit about Lambda already, so you can take this project and deploy it as a function, then create
 a test event from API Gateway Proxy template and change the path to a "/" and the method to a GET.
@@ -110,7 +110,7 @@ Then run the test and you should get an output like so:
 ```
 
 
-##Cold Starts
+## Cold Starts
 
 One of the downsides of Lambda is the slowness in JVM start time vs say the Node.js option they provide. This
 can be also be extended when it bootstraps an application container, like Spring. However with the right tuning
@@ -119,7 +119,7 @@ be fine.
 
 In the case of this demo project, I used 1536Mb, and on average the cold start was 2100ms.
 
-##Properties
+## Properties
 
 Unfortunately AWS doesn't like "." in their property names, if you are specifying external properties, so I use underscores. This
 can mess with Springs opinionated view on what the properties should look like - so be wary!
